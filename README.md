@@ -5,7 +5,7 @@ Classifies events, extracts locations, retrieves historical context,
 and generates structured response reports — with optional visual damage 
 assessment via LLaVA-class VLM.
 
-**Live demo:** [link] | **Video walkthrough:** [link]
+**Live demo:** [https://disasterpulse-agenticrag-j83z0loky-syedfaisalabrars-projects.vercel.app/]
 
 ## Architecture
 

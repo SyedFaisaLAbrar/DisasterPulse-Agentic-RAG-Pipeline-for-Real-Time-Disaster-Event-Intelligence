@@ -112,7 +112,7 @@ app.add_middleware(
 )
 
 
-EVAL_RESULTS_PATH = "../data/eval_results.json"
+EVAL_RESULTS_PATH = "evaluation/eval_results.json"
 
 @app.get("/evaluate")
 async def get_evaluation():

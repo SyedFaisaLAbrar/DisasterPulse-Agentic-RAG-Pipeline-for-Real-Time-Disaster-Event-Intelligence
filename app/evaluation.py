@@ -20,7 +20,7 @@ from tqdm import tqdm
 
 from data_loader import get_collection, retrieve_similar_events
 
-CRISIS_MMD_ANNOTATIONS = "../data/crisis_mmd/CrisisMMD_v2.0/annotations"
+CRISIS_MMD_ANNOTATIONS = "data/crisis_mmd/CrisisMMD_v2.0/annotations"
 EVAL_RESULTS_PATH      = "../evaluation/eval_results.json"
 EVAL_SAMPLE_SIZE       = 200   # number of test queries — keep low for speed
 

@@ -30,7 +30,7 @@ from data_loader import get_collection, retrieve_similar_events
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 
-CHROMA_DIR        = "../data/chroma_db"
+CHROMA_DIR        = "data/chroma_db"
 RAG_TOP_K         = 5
 
 from langchain_groq import ChatGroq

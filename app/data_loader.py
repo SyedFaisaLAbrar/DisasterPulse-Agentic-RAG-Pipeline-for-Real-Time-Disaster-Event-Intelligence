@@ -19,9 +19,9 @@ import chromadb
 from chromadb.utils import embedding_functions
 
 # ── Config ─────────────────────────────────────────────────────────────────────
-GDELT_CSV      = "../data/gdelt_gkg.csv"
-CRISIS_MMD_DIR = "../data/crisis_mmd/CrisisMMD_v2.0"
-CHROMA_DIR     = "../data/chroma_db"
+GDELT_CSV      = "data/gdelt_gkg.csv"
+CRISIS_MMD_DIR = "data/crisis_mmd/CrisisMMD_v2.0"
+CHROMA_DIR     = "data/chroma_db"
 EMBED_MODEL    = "all-MiniLM-L6-v2"   # CPU-friendly, ~90MB, cached after first run
 
 # GDELT GKG V2Themes prefixes that signal a disaster event

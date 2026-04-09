@@ -9,10 +9,7 @@ assessment via LLaVA-class VLM.
 
 ## Architecture
 
-```markdown
-## Architecture
-
-![DisasterPulse Pipeline](docs/architecture.png)
+<!-- ![DisasterPulse Pipeline](docs/architecture.png) -->
 
 [View detailed architecture](docs/ARCHITECTURE.md)
 

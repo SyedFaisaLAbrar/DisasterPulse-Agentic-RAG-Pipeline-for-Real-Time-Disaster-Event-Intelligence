@@ -9,7 +9,12 @@ assessment via LLaVA-class VLM.
 
 ## Architecture
 
+```markdown
+## Architecture
+
 ![DisasterPulse Pipeline](docs/architecture.png)
+
+[View detailed architecture](docs/ARCHITECTURE.md)
 
 > 6-node LangGraph agentic pipeline. Flow: text/image input → classifier → location extractor → RAG retriever → router decision → optional VLM analysis → report synthesis
 

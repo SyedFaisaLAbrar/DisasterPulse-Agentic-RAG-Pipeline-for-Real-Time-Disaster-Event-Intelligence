@@ -236,8 +236,38 @@ Provide a structured assessment with:
 Be concise and factual. Focus on actionable information for first responders."""
 
 
+def _extract_severity_from_vlm(vlm_caption: str) -> Optional[str]:
+    """
+    Extract implied severity from VLM damage assessment.
+    Maps: catastrophic/severe → high, moderate → medium, minor/none → low
+    Returns None if cannot determine.
+    """
+    if not vlm_caption:
+        return None
+    
+    caption_lower = vlm_caption.lower()
+    
+    # Check for high severity indicators
+    if any(word in caption_lower for word in ["catastrophic", "severe damage", "collapsed", "destroyed"]):
+        return "high"
+    
+    # Check for medium severity indicators  
+    if any(word in caption_lower for word in ["moderate damage", "partially", "significant damage"]):
+        return "medium"
+    
+    # Check for low severity indicators
+    if any(word in caption_lower for word in ["minor damage", "minimal", "light damage", "intact"]):
+        return "low"
+    
+    return None
+
+
 def node_vlm_captioner(state: PipelineState) -> PipelineState:
-    """Node 5: generate damage caption using LLaVA via Ollama."""
+    """Node 5: generate damage caption using LLaVA via Ollama.
+    
+    Also attempts to extract severity from image analysis and update state
+    if initial severity was 'unknown'.
+    """
     if not state.get("needs_vlm"):
         return {**state, "vlm_caption": None}
 
@@ -258,7 +288,16 @@ def node_vlm_captioner(state: PipelineState) -> PipelineState:
             ])
         ])
         caption = response.content.strip()
-        return {**state, "vlm_caption": caption}
+        
+        # Extract severity from VLM analysis
+        vlm_severity = _extract_severity_from_vlm(caption)
+        
+        # If initial severity was "unknown" and VLM found evidence, update it
+        updated_severity = state.get("severity", "unknown")
+        if vlm_severity and (state.get("severity") == "unknown"):
+            updated_severity = vlm_severity
+        
+        return {**state, "vlm_caption": caption, "severity": updated_severity}
 
     except ImportError:
         return {**state,
@@ -289,6 +328,10 @@ def node_vlm_captioner(state: PipelineState) -> PipelineState:
 REPORT_SYSTEM = """You are generating a structured disaster intelligence report for humanitarian responders.
 Output ONLY valid JSON with no markdown, no explanation, no extra text.
 
+CRITICAL: Re-assess severity using ALL available evidence (text, image analysis, historical context).
+If image analysis or historical similar events indicate moderate/high damage, SET SEVERITY ACCORDINGLY.
+Do NOT preserve "unknown" if evidence is available.
+
 Schema:
 {
   "event_summary": "<2-3 sentence factual summary>",
@@ -302,10 +345,12 @@ Schema:
   "historical_context": "<1-2 sentences comparing this event to retrieved past events, noting if severity is higher or lower than baseline>"
 }
 
-Compare this event against the similar past events retrieved. Note escalation patterns,
-what response was deployed in past similar events, and whether current severity appears
-higher or lower than historical baseline. Reflect this in historical_context and
-response_recommendations."""
+Severity determination rules:
+- "high": confirmed deaths, severe structural damage, mass displacement, destructive events
+- "medium": injuries confirmed, moderate damage visible, active rescue operations
+- "low": warnings, minor damage, precautionary alerts, limited impacts
+
+Compare against similar past events. Override initial assessment with actual evidence."""
 
 def node_report_generator(state: PipelineState) -> PipelineState:
     """Node 6: synthesize all signals into a final structured report."""
@@ -329,13 +374,18 @@ def node_report_generator(state: PipelineState) -> PipelineState:
 
 ORIGINAL TEXT: {state['raw_text'][:500]}
 
-CLASSIFIED AS:
+INITIAL ASSESSMENT (may be incomplete - verify against all evidence below):
 - Disaster types: {state.get('disaster_types', [])}
-- Severity: {state.get('severity', 'unknown')}
+- Preliminary severity: {state.get('severity', 'unknown')}
 - Locations: {[l['name'] for l in state.get('locations', [])]}
 
+ADDITIONAL EVIDENCE TO CONSIDER:
 {rag_summary}
 {vlm_summary}
+
+Based on ALL evidence above (text + image analysis + historical comparison), 
+generate the final disaster intelligence report.
+If severity evidence contradicts the preliminary assessment, use the evidence.
 
 Output the JSON report now:"""
 

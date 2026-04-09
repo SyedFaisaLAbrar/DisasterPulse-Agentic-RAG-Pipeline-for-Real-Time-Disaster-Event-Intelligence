@@ -68,6 +68,12 @@ function AnalyzeContent() {
 
       const data = await res.json();
       setResult(data);
+      
+      // Complete pipeline animation when report arrives
+      if (pipelineRef.current) {
+        await pipelineRef.current.completeReport();
+      }
+      
       showToast('Analysis complete! Check results below.');
     } catch (err) {
       showToast('Analysis failed. Check API connection.', 'err');

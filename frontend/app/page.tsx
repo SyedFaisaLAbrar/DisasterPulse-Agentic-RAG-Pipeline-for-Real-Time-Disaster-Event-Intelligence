@@ -160,7 +160,7 @@ function FeedContent() {
               <div style={{ textAlign: 'center', padding: '64px 20px' }}>
                 <div style={{ width: '32px', height: '32px', border: '3px solid var(--border)', borderTop: '3px solid var(--text)', borderRadius: '50%', animation: 'spin 0.6s linear infinite', margin: '0 auto 16px' }} />
                 <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
-                  Loading events from ChromaDB…<br/>Make sure <code style={{ color: 'var(--text)' }}>data_loader.py</code> has run.
+                  Loading events from ChromaDB…
                 </p>
                 <style>{`
                   @keyframes spin {

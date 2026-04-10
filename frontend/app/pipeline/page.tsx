@@ -119,7 +119,7 @@ function PipelineContent() {
                   flex: 1,
                 }}
               >
-                <img src={`/images/${node.icon}`} alt={node.name} width="24" height="24" style={{ filter: 'invert(1)' }} />
+                <img src={`/images/${node.icon}`} alt={node.name} width="48" height="48" style={{ filter: 'invert(1)' }} />
                 <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text)', textAlign: 'center' }}>
                   {node.name}
                 </div>
@@ -139,7 +139,7 @@ function PipelineContent() {
       {activeNode && (
         <div style={{ background: 'var(--surface)', border: '1px solid var(--accent)', borderRadius: '10px', padding: '20px', marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <img src={`/images/${nodes[activeNode - 1].icon}`} alt={nodes[activeNode - 1].name} width="32" height="32" style={{ filter: 'invert(1)' }} />
+            <img src={`/images/${nodes[activeNode - 1].icon}`} alt={nodes[activeNode - 1].name} width="64" height="64" style={{ filter: 'invert(1)' }} />
             <div>
               <div style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text)' }}>
                 {nodes[activeNode - 1].name}

@@ -1,0 +1,41 @@
+name: disasterpulse
+services:
+  - name: backend
+    github:
+      repo: SyedFaisaLAbrar/DisasterPulse-Agentic-RAG-Pipeline-for-Real-Time-Disaster-Event-Intelligence
+      branch: main
+      deploy_on_push: true
+    
+    # Build configuration (runs from repo root)
+    build_command: cd app && pip install -r requirements.txt
+    
+    # Runtime configuration (runs from repo root)
+    run_command: cd app && uvicorn main:app --host 0.0.0.0 --port 8080
+    
+    # HTTP configuration
+    http_port: 8080
+    routes:
+      - path: /
+        preserve_path_prefix: true
+    
+    # Health check
+    health_check:
+      http_path: /health
+      initial_delay_seconds: 10
+      period_seconds: 10
+      timeout_seconds: 5
+      failure_threshold: 3
+    
+    # Environment variables
+    envs:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PORT
+        value: "8080"
+    
+    # Instance configuration
+    instance_count: 1
+    instance_size_slug: basic-xs
+    
+    # Build configuration
+    log_destination: stdout

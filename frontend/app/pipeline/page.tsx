@@ -14,7 +14,7 @@ function PipelineContent() {
     {
       id: 1,
       name: 'Classifier',
-      icon: '🏷️',
+      icon: 'data-classification.png',
       description: 'Disaster type & severity detection from raw text',
       details: [
         'Model: Llama 3.1 8B Instant (Groq)',
@@ -26,7 +26,7 @@ function PipelineContent() {
     {
       id: 2,
       name: 'Location Extractor',
-      icon: '📍',
+      icon: 'location-pin.png',
       description: 'Named entity recognition for geographic locations',
       details: [
         'Tool: spaCy en_core_web_sm',
@@ -38,7 +38,7 @@ function PipelineContent() {
     {
       id: 3,
       name: 'RAG Retriever',
-      icon: '🗄️',
+      icon: 'database.png',
       description: 'Semantic search for similar past events',
       details: [
         'Vector Store: ChromaDB',
@@ -50,7 +50,7 @@ function PipelineContent() {
     {
       id: 4,
       name: 'Router',
-      icon: '🔀',
+      icon: 'arrows.png',
       description: 'Conditional routing to VLM based on evidence',
       details: [
         'Decides if image analysis is needed',
@@ -62,7 +62,7 @@ function PipelineContent() {
     {
       id: 5,
       name: 'VLM Captioner',
-      icon: '👁️',
+      icon: 'ai.png',
       description: 'Vision-language understanding for damage assessment',
       details: [
         'Model: Llama 4 Scout 17B 16E (Groq)',
@@ -74,7 +74,7 @@ function PipelineContent() {
     {
       id: 6,
       name: 'Report Generator',
-      icon: '📄',
+      icon: 'file.png',
       description: 'Produce final structured report',
       details: [
         'Synthesizes all pipeline outputs',
@@ -119,7 +119,7 @@ function PipelineContent() {
                   flex: 1,
                 }}
               >
-                <div style={{ fontSize: '28px' }}>{node.icon}</div>
+                <img src={`/images/${node.icon}`} alt={node.name} width="24" height="24" style={{ filter: 'invert(1)' }} />
                 <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text)', textAlign: 'center' }}>
                   {node.name}
                 </div>
@@ -139,7 +139,7 @@ function PipelineContent() {
       {activeNode && (
         <div style={{ background: 'var(--surface)', border: '1px solid var(--accent)', borderRadius: '10px', padding: '20px', marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div style={{ fontSize: '32px' }}>{nodes[activeNode - 1].icon}</div>
+            <img src={`/images/${nodes[activeNode - 1].icon}`} alt={nodes[activeNode - 1].name} width="32" height="32" style={{ filter: 'invert(1)' }} />
             <div>
               <div style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text)' }}>
                 {nodes[activeNode - 1].name}

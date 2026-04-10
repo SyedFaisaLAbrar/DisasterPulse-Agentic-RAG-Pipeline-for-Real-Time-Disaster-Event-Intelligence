@@ -20,7 +20,7 @@ function MetricsContent() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch(`${apiBase}/evaluate`);
+        const res = await fetch('/eval_results.json');
         if (res.ok) {
           const data = await res.json();
           setEvalData(data);
